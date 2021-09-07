@@ -123,43 +123,32 @@ group by countrycode;
 select * from city where countrycode = "ABW";
 
 -- 15. 국가별로 가장 인구가 많은 도시의 정보를 출력하시오. 국가 코드로 정렬한다.(232 건)
-select countrycode, name, population
-from city
-where (countrycode, population) in (
-			select countrycode, max(population) 
+select countrycode, name, max(population) 
 			from city c1 
 			group by countrycode
-            )
-order by countrycode;
+            order by countrycode;
 
 
 -- 16. 국가 이름과 함께 국가별로 가장 인구가 많은 도시의 정보를 출력하시오.(239 건
 select co.code, co.name, a.name, a.population
 from country co left join (
-							select countrycode, name, population
-							from city
-							where (countrycode, population) in (
-										select countrycode, max(population) 
-										from city c1 
-										group by countrycode
-										)
+							select countrycode, name, max(population) population 
+							from city c1 
+							group by countrycode
 							order by countrycode
                             ) a
 on co.code = a.countrycode;
 
+
 -- 17. 위 쿼리의 내용이 자주 사용된다. 재사용을 위해 위 쿼리의 내용을 summary 라는 이름의 view 로생성하시오.
-create view summary as (select co.code 국가코드, co.name 나라, a.name 지역, a.population 인구
+create view summary as (select co.code, co.name, a.name, a.population
 from country co left join (
-							select countrycode, name, population
-							from city
-							where (countrycode, population) in (
-										select countrycode, max(population) 
-										from city c1 
-										group by countrycode
-										)
+							select countrycode, name, max(population) population 
+							from city c1 
+							group by countrycode
 							order by countrycode
                             ) a
-on co.code = a.countrycode);
+on co.code = a.countrycod);
 
 select * from summary;
 
