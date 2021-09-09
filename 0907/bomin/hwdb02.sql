@@ -1,3 +1,4 @@
+use scott;
 select * from emp;
 select * from dept;
 -- 1. 부서위치가 CHICAGO인 모든 사원에 대해 이름,업무,급여 출력하는 SQL을 작성하세요.

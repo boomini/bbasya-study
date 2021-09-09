@@ -155,3 +155,25 @@ select * from summary;
 
 -- 18. summary 에서 KOR 의 대표도시를 조회하시오
 select * from summary where 국가코드 = "KOR";
+
+-- 대륙별 가장 많이 사용하고 있는 언어를 출력하세요.(인구가 0 명인 대륙인 경우 출력하지 않아도 된다).(6)
+select a.code, a.name, a.continent, a.language, max(population)  
+from (
+		select co.code, co.name, co.continent, cl.language, max(cl.percentage)*co.population population
+		from country co join countrylanguage cl
+		on co.code = cl.countrycode
+		group by cl.countrycode
+		order by continent
+	) a
+    group by a.continent
+    order by continent
+;
+
+select distinct continent from country
+order by continent;
+
+select * from country where upper(continent) = upper("Antarctica");
+
+select * from countrylanguage ;
+select continent, count(*) from country 
+group by continent;
