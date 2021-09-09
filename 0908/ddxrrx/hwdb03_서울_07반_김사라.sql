@@ -84,7 +84,6 @@ from emp e right outer join dept d
 on e.DEPTNO = d.DEPTNO
 group by e.DEPTNO;
 
-drop view SumSalary;
 select * from SumSalary;
 
 -- 15. 14번에서 작성된 View를 이용하여 부서별 급여의 합계가 큰 1~3순위를 출력하세요.
