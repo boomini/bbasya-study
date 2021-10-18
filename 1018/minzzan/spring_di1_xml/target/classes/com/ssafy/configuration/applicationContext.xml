@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="gbService"
+		class="com.ssafy.model.service.GuestBookServiceImpl">
+		<!-- <property name="guestBookDao"> <ref bean="gbDao"/> </property> -->
+		<property name="guestBookDao" ref="gbDao" />
+	</bean>
+	<bean id="gbDao" class="com.ssafy.model.dao.GuestBookDaoImpl">
+		<property name="dataSource" ref="ds" />
+	</bean>
+
+	<bean id="ds"
+		class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="com.mysql.cj.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://127.0.0.1:3306/ssafyweb?serverTimezone=UTC&amp;useUniCode=yes&amp;characterEncoding=UTF-8" />
+		<property name="username" value="ssafy" />
+		<property name="password" value="ssafy" />
+
+	</bean>
+
+
+</beans>
