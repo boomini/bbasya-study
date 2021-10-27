@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.test.model.mapper.PhoneMapper">
+
+	<insert id="registerPhone" parameterType="PhoneDto">
+		insert into phones (num, model, price, vcode)
+		values (#{num}, #{model}, #{price}, #{vcode})
+	</insert>
+	
+	<select id="listPhone" resultType="PhoneDto">
+		select p.num, p.model, p.price, c.vendor
+		from phones p, company c
+		where p.vcode=c.vcode
+	</select>
+
+	<select id="getPhone" parameterType="string" resultType="PhoneDto">
+		select p.num, p.model, p.price, c.vendor
+		from phones p, company c
+		where p.vcode=c.vcode
+		and num = #{num}
+	</select>
+	
+	<delete id="deletePhone" parameterType="string">
+		delete from phones
+		where num = #{num}
+	</delete>
+
+</mapper>
