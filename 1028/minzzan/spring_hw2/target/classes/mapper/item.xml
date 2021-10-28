@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.item.model.mapper.ItemMapper">
+
+	<insert id="registerItem" parameterType="ItemDto">
+		insert into
+		hw2_goods_info (item_code, item_name, item_price, item_corp, cate_seq,
+		dt_reg)
+		values (#{item_code}, #{item_name}, #{item_price},
+		#{item_corp}, #{cate_seq}, now())
+	</insert>
+
+	<select id="listItem" resultType="ItemDto">
+		select g.item_code,
+		g.item_name, g.item_price, g.item_corp
+		from hw2_goods_info g;
+	</select>
+
+	<select id="getItem" parameterType="string" resultType="ItemDto">
+		select
+		g.item_code, g.item_name, g.item_price, g.item_corp
+		from hw2_goods_info g;
+		where item_code = #{item_code}
+	</select>
+
+	<delete id="deleteItem" parameterType="string">
+		delete from hw2_goods_info
+		where item_code = #{item_code}
+	</delete>
+
+</mapper>
