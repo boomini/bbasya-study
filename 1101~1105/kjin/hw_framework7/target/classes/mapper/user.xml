@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.hw.model.mapper.UserMapper">
+	<select id="login" parameterType="map" resultType="UserDto">
+		select id, name
+		from prousers
+		where id=#{id} and pass=#{pass}
+	</select>
+
+	<select id="insert" parameterType="UserDto">
+		insert into prousers (id, pass, name)
+		values (#{id}, #{pass}, #{name})
+	</select>
+
+</mapper>

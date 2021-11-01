@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.hw.model.mapper.ProductMapper">
+	<insert id="registerArticle" parameterType="ProductDto">
+		insert into products (no, name, price, descr)
+		values (#{no}, #{name}, #{price}, #{desc})
+	</insert>
+		
+	<insert id="registerFile" parameterType="ProductDto">
+		insert into fileinfo (no, savefolder, originfile, savefile)
+		values 
+		<foreach collection="fileInfos" item="file" separator=",">
+			(#{no}, #{file.saveFolder}, #{file.originFile}, #{file.saveFile})
+		</foreach>
+	</insert>
+	
+	<select id="getArticle" parameterType="String" resultType="productDto">
+		select no, name, price, descr as 'desc'
+		from products
+		where no=#{no}
+	</select>
+	
+	<select id="listArticle" parameterType="map" resultMap="articleList">
+		select no, name, price, descr as 'desc'
+		from products
+		<if test="word!=null and word!=''">
+			<if test="key=='name'">
+				where name like concat('%',#{word},'%')
+			</if>
+			<if test="key!='name'">
+				where price &lt;= #{word}
+			</if>
+		</if>
+	</select>
+	
+	<resultMap type="ProductDto" id="articleList">
+		<result column="no" property="no"/>
+		<result column="name" property="name"/>
+		<result column="price" property="price"/>
+		<result column="desc" property="desc"/>
+		<collection property="fileInfos" column="no" javaType="list" ofType="fileinfo" select="fileInfoList"></collection>
+	</resultMap>
+	
+	<select id="fileInfoList" resultType="fileInfoDto">
+		select no, savefolder, originfile, savefile
+		from fileinfo
+		where no=#{no}
+	</select>
+	
+	<delete id="deleteFile" parameterType="String">
+		delete from fileinfo
+		where no=#{no};
+	</delete>
+	
+	<delete id="deleteArticle" parameterType="String">
+		delete from products
+		where no=#{no}
+	</delete>
+	
+	<update id="updateArticle" parameterType="productDto">
+		update products set name=#{name}, price=#{price}, descr=#{desc}
+		where no=#{no}
+	</update>
+	
+	
+</mapper>
