@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>도서관리</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./centerList.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="header"></div>
+      <div class="regist">
+        <h1 class="underline">코로나19 예방접종센터 상세페이지</h1>
+        <div class="regist_form">
+          <label for="isbn">센터명</label>
+          <div class="view">{{cur.centerName}}</div>
+          <label for="title">센터유형</label>
+          <div class="view">{{cur.centerType}}</div>
+          <label for="author">주소</label>
+          <div class="view">{{cur.address}}</div>
+          <label for="price">센터시설명</label>
+          <div class="view">{{cur.facilityName}}</div>
+          <label for="content">전화번호</label>
+          <div class="view">{{cur.phoneNumber}}</div>
+          <label for="content">생성일</label>
+          <div class="view">{{cur.createdAt}}</div>
+          <label for="content">수정일</label>
+          <div class="view">{{cur.updatedAt}}</div>
+        </div>
+      </div>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            center: centerList.data,
+            cur: {},
+          };
+        },
+        created() {
+          const params = new URL(document.location).searchParams;
+          for (let obj of this.center) {
+            if (obj.id == params.get("id")) {
+              this.cur = obj;
+              break;
+            }
+          }
+        },
+      });
+    </script>
+  </body>
+</html>

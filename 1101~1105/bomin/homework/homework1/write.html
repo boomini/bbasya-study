@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>작성</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="regist">
+        <h1 class="underline">등록</h1>
+        <div class="regist_form">
+          <label for="writer">작성자</label>
+          <input type="text" id="writer" name="writer" v-model="writer" ref="isbn" /><br />
+          <label for="title">제목</label>
+          <input type="text" id="title" name="title" v-model="title" ref="title" /><br />
+          <label for="content">내용</label>
+          <br />
+          <textarea
+            id="content"
+            name="content"
+            v-model="content"
+            cols="35"
+            rows="5"
+            ref="content"
+          ></textarea
+          ><br />
+          <button @click="check()">저장</button>
+          <button @click="print()">출력</button>
+        </div>
+      </div>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            writer: "",
+            title: "",
+            content: "",
+          };
+        },
+        methods: {
+          check() {
+            let err = true;
+            let msg = "";
+            !this.writer && ((msg = "isbn 입력해주세요"), (err = false), this.$refs.writer.focus());
+            err &&
+              !this.title &&
+              ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
+            err &&
+              !this.content &&
+              ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
+            if (!err) alert(msg);
+            else this.register();
+          },
+          register() {
+            let cur = {
+              writer: this.writer,
+              title: this.title,
+              content: this.content,
+            };
+
+            localStorage.setItem("cur", JSON.stringify(cur));
+            alert("등록 성공!!!");
+          },
+          print() {
+            console.log(JSON.parse(localStorage.getItem("cur")));
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>도서관리</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./centerList.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="header">
+        <p class="logo">코로나 19 예방접종센터목록</p>
+      </div>
+      <div>
+        <h1 class="underline">도서 목록</h1>
+          <table id="data-list">
+            <colgroup>
+              <col style="width: 5%" />
+              <col style="width: 20%" />
+              <col style="width: 40%" />
+              <col style="width: 20%" />
+              <col style="width: 15%" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>번호</th>
+                <th>센터명</th>
+                <th>생성일</th>
+                <th>수정일</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(cur,idx) in center" :key="center.id">
+                <td>{{cur.id}}</td>
+                <td><a :href=`./detail.html?id=${cur.id}`>{{cur.centerName}}</a></td>
+                <td><{{cur.createdAt}}</td>
+                <td>{{cur.updatedAt}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            center: centerList.data,
+          };
+        },
+      });
+    </script>
+  </body>
+</html>

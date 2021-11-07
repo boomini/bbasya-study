@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>도서관리</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="header">
+        <a href="index.html"> <img src="./img/ssafy_logo.png" class="ssafy_logo" /></a>
+        <p class="logo">도서관리</p>
+      </div>
+      <div>
+        <h1 class="underline">도서 목록</h1>
+        <div style="text-align: right">
+          <button @click="moveRegister()">도서 등록</button>
+        </div>
+        <div v-if="books.length!=0">
+          <table id="book-list">
+            <colgroup>
+              <col style="width: 5%" />
+              <col style="width: 20%" />
+              <col style="width: 40%" />
+              <col style="width: 20%" />
+              <col style="width: 15%" />
+            </colgroup>
+            <thead>
+              <tr>
+                <th>번호</th>
+                <th>ISBN</th>
+                <th>제목</th>
+                <th>저자</th>
+                <th>가격</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(book,idx) in books" :key="book.isbn">
+                <td>{{idx+1}}</td>
+                <td>{{book.isbn}}</td>
+                <td><a :href=`./view.html?isbn=${book.isbn}`>{{book.title}}</a></td>
+                <td>{{book.author}}</td>
+                <td>{{book.price}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="text-center" v-else>게시글이 없습니다.</div>
+      </div>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            books: [],
+          };
+        },
+        created() {
+          const bookList = localStorage.getItem("booklist");
+
+          let newBook = {
+            books: []
+          }
+          if(bookList) {
+            newBook = JSON.parse(bookList);
+          }
+          console.log(newBook);
+          newBook.books.sort((a, b) => {
+          return -(a.price - b.price);
+        });
+
+          this.books = newBook.books;
+        },
+        methods:{
+          moveRegister(){
+            location.href = "./create.html";
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

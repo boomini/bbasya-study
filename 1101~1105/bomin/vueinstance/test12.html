@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h2>범위 지정 - 4</h2>
+      <div v-for="i in 4">{{i}}</div>
+      <h2>객체의 값</h2>
+      <ul>
+        <li v-for="value in student">{{value}}</li>
+      </ul>
+      <h2>객체의 속성이름, 값</h2>
+      <ul>
+        <li v-for="(value, key, idx) in student">{{idx}}.{{key}}:{{value}}</li>
+      </ul>
+      <h2>배열(문자열)의 값</h2>
+      <ul>
+        <li v-for="(region, idx) in regions">{{idx+1}}.{{region}}</li>
+      </ul>
+    </div>
+    <script>
+      new Vue({
+        el: "#app",
+        data() {
+          return {
+            student: { name: "안효인", age: 30 },
+            regions: ["부울경", "광주", "구미", "대전", "서울"],
+          };
+        },
+      });
+    </script>
+  </body>
+</html>
